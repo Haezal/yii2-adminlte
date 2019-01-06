@@ -19,10 +19,10 @@ $config = [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
-        'user' => [
-            'identityClass' => 'app\models\User',
-            'enableAutoLogin' => true,
-        ],
+//        'user' => [
+//            'identityClass' => 'app\models\User',
+//            'enableAutoLogin' => true,
+//        ],
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
@@ -49,8 +49,61 @@ $config = [
             'rules' => [
             ],
         ],
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager', // or use 'yii\rbac\DbManager'
+        ],
+        'view' => [
+            'theme' => [
+                'pathMap' => [
+                    '@dektrium/user/views' => '@app/views/user'
+                ],
+            ],
+        ],
     ],
     'params' => $params,
+    'modules' => [
+        'user' => [
+            'class' => 'dektrium\user\Module',
+            'admins' => ['admin'],
+            'enablePasswordRecovery' => true,
+            'controllerMap' => [
+                'registration'  => 'app\controllers\user\RegistrationController',
+                'settings'      => 'app\controllers\user\SettingsController',
+                'admin'         => 'app\controllers\user\AdminController',
+            ],
+//            'modelMap' => [
+//                'Profile'               => 'app\models\Profile',
+//                'User'                  => 'app\models\User',
+//                'RegistrationForm'      => 'app\models\RegistrationForm',
+//            ],
+        ],
+        'admin' => [
+            'class' => 'mdm\admin\Module',
+            'layout' => 'left-menu',
+            'menus' => [
+                'assignment' => [
+                    'label' => 'Grant Access' // change label
+                ],
+                'user' => null, // disable menu
+            ],
+        ]
+    ],
+    'as access' => [
+        'class' => 'mdm\admin\components\AccessControl',
+        'allowActions' => [
+//            'site/*',
+            'admin/*',
+            'gii/*',
+            'debug/*',
+            'user/security/logout',
+            'user/admin/*',
+            // The actions listed here will be allowed to everyone including guests.
+            // So, 'admin/*' should not appear here in the production, of course.
+            // But in the earlier stages of your development, you may probably want to
+            // add a lot of actions here until you finally completed setting up rbac,
+            // otherwise you may not even take a first step.
+        ]
+    ],
 ];
 
 if (YII_ENV_DEV) {

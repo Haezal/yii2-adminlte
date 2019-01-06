@@ -1,21 +1,10 @@
-<p align="center">
-    <a href="https://github.com/yiisoft" target="_blank">
-        <img src="https://avatars0.githubusercontent.com/u/993323" height="100px">
-    </a>
-    <h1 align="center">Yii 2 Basic Project With AdminLTE Template</h1>
-    <br>
-</p>
+WELCOME
+=======
 
-Yii 2 Basic Project Template is a skeleton [Yii 2](http://www.yiiframework.com/) application best for
-rapidly creating small projects.
-
-The template contains the basic features including user login/logout and a contact page.
-It includes all commonly used configurations that would allow you to focus on adding new
-features to your application.
-
-[![Latest Stable Version](https://img.shields.io/packagist/v/yiisoft/yii2-app-basic.svg)](https://packagist.org/packages/yiisoft/yii2-app-basic)
-[![Total Downloads](https://img.shields.io/packagist/dt/yiisoft/yii2-app-basic.svg)](https://packagist.org/packages/yiisoft/yii2-app-basic)
-[![Build Status](https://travis-ci.org/yiisoft/yii2-app-basic.svg?branch=master)](https://travis-ci.org/yiisoft/yii2-app-basic)
+This is Yii 2 Basic Project Template with : 
+- Template AdminLTE
+- Yii2-user
+- Yii2-rbac
 
 DIRECTORY STRUCTURE
 -------------------
@@ -43,4 +32,14 @@ The minimum requirement by this project template that your Web server supports P
 INSTALLATION
 ------------
 
-Download as zip file. Rename to your project name and enjoy it!!
+Download as zip file. Extract to your webroot folder. Then run composer update.
+
+- yii migrate/up --migrationPath=@vendor/dektrium/yii2-user/migrations
+- yii user/create [email] [username] [password]
+- require mdmsoft/yii2-admin "~2.0"
+- yii migrate --migrationPath=@mdm/admin/migrations
+- yii migrate --migrationPath=@yii/rbac/migrations
+
+CREDIT
+------
+Haezal Musa

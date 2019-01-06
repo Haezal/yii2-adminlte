@@ -1,3 +1,8 @@
+<?php
+use mdm\admin\components\MenuHelper;
+use yii\bootstrap\Nav;
+use mdm\admin\components\Helper;
+?>
 <aside class="main-sidebar">
 
     <section class="sidebar">
@@ -8,7 +13,9 @@
                 <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="img-circle" alt="User Image"/>
             </div>
             <div class="pull-left info">
-                <p>Haezal Bin Musa</p>
+                <p>
+                    <?php echo (isset(\Yii::$app->user->identity->profile->name)) ? \Yii::$app->user->identity->profile->name: Yii::$app->user->identity->username ?>
+                </p>
 
                 <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
@@ -28,46 +35,59 @@
         */ ?>
         <!-- /.search form -->
 
-        <?= dmstr\widgets\Menu::widget(
+        <?php $menu = [
+
+            ['label' => 'Main Menu', 'options' => ['class' => 'header']],
+            ['label' => 'Dashboard', 'icon' => 'file-code-o', 'url' => ['/site/index']],
+            ['label' => 'Admin Menu', 'options' => ['class' => 'header'], 'visible' => Yii::$app->user->can('admin')],
+
+            // admin menu
+            ['label' => 'Admin Menu', 'options' => ['class' => 'header']],
+            ['label' => 'User Management', 'icon' => 'file-code-o', 'url' => ['/user/admin']],
+
+
+
+            ['label' => 'Web Master Menu', 'options' => ['class' => 'header']],
+            ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],
+            ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug']],
             [
-                'options' => ['class' => 'sidebar-menu tree', 'data-widget'=> 'tree'],
+                'label' => 'Example Menu',
+                'icon' => 'share',
+                'url' => '#',
                 'items' => [
-                    ['label' => 'Main Menu', 'options' => ['class' => 'header']],
-                    ['label' => 'User Management', 'icon' => 'file-code-o', 'url' => ['/user']],
-                    ['label' => 'Vehicle Menu', 'options' => ['class' => 'header']],
-                    ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
+                    ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii'],],
+                    ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug'],],
                     [
-                        'label' => 'Some tools',
-                        'icon' => 'share',
+                        'label' => 'Level One',
+                        'icon' => 'circle-o',
                         'url' => '#',
                         'items' => [
-                            ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii'],],
-                            ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug'],],
+                            ['label' => 'Level Two', 'icon' => 'circle-o', 'url' => '#',],
                             [
-                                'label' => 'Level One',
+                                'label' => 'Level Two',
                                 'icon' => 'circle-o',
                                 'url' => '#',
                                 'items' => [
-                                    ['label' => 'Level Two', 'icon' => 'circle-o', 'url' => '#',],
-                                    [
-                                        'label' => 'Level Two',
-                                        'icon' => 'circle-o',
-                                        'url' => '#',
-                                        'items' => [
-                                            ['label' => 'Level Three', 'icon' => 'circle-o', 'url' => '#',],
-                                            ['label' => 'Level Three', 'icon' => 'circle-o', 'url' => '#',],
-                                        ],
-                                    ],
+                                    ['label' => 'Level Three', 'icon' => 'circle-o', 'url' => '#',],
+                                    ['label' => 'Level Three', 'icon' => 'circle-o', 'url' => '#',],
                                 ],
                             ],
                         ],
                     ],
-                    ['label' => 'Admin Menu', 'options' => ['class' => 'header']],
-                    ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],
-                    ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug']],
                 ],
-            ]
-        ) ?>
+            ],
+        ];
+
+
+
+//        $menu = Helper::filter($menuItem);
+
+        echo dmstr\widgets\Menu::widget([
+            'options' => ['class' => 'sidebar-menu tree', 'data-widget'=> 'tree'],
+            'items' =>  $menu,
+            ]);
+
+        ?>
 
     </section>
 
